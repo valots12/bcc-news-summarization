@@ -37,6 +37,7 @@ At the state of the art, one of the most used alternatives of a human evaluation
 <img src="Images/rouge.png" width=420>
 where N is the length of the n-gram chosen.
 
+The proposed models obtained the following results:
 
 |          | ROUGE-1 | ROUGE-2 | ROUGE-L | ROUGE-L SUM |
 | :---:    | :-----: | :-----: | :-----: | :---------: |
@@ -45,7 +46,7 @@ where N is the length of the n-gram chosen.
 | BART     | 0.203   | 0.041   | 0.135   | 0.166       |
 | PEGASUS  | 0.472   | 0.269   | 0.412   | 0.414       |
 
-In the following table, we report the results obtained on a specific document from the test set.
+To have a better understanding of the differences between summarization techniques, the following table report the results obtained on a specific document from the test set.
 
 <img src="Images/rouge_sum.png" width=640>
 
@@ -53,7 +54,7 @@ From both a human evaluation and an analytical one, it is clear the below summar
 
 ### Fine tuning of the best model
 
-In order to improve the results obtained on the best model, we have implemented a fine tuning strategy on the Pegasus model. Fine tuning allows us to adjust the weights estimated on a huge dataset in order to become more similar to a specific task. In this case, the goal of the strategy is to adapt the Pegasus model to sport documents, but still starting from the original weights. To avoid GPU limitations, we randomly selected 10000 documents from the original training dataset and 1000 from the validation one with their respective summaries. The training phase uses 8 elements for each training batch and 4 for each validation one. This step required 8 epochs and around 9 hours of training. After this step the improvement on the validation set was very limited so we decided to not continue more.
+In order to improve the results obtained on the best model, we have implemented a fine tuning strategy on the Pegasus model. Fine tuning allows us to adjust the weights estimated on a huge dataset in order to become more similar to a specific task. In this case, the goal of the strategy is to adapt the Pegasus model to sport documents, but still starting from the original weights. The training phase uses 8 elements for each training batch and 4 for each validation one. This step required 8 epochs and around 9 hours of training. After this step, the improvement on the validation set was very limited so we decided to not continue more.
 
 |                     | ROUGE-1 | ROUGE-2 | ROUGE-L | ROUGE-L SUM |
 | :---:               | :-----: | :-----: | :-----: | :---------: |
