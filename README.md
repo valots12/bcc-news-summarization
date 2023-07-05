@@ -10,7 +10,7 @@ The text technique applied on the dataset is text summarization; text summarizat
 
 - Abstraction-based summarization, on the other hand, is based on more advanced deep learning techniques. This family tries to copy a typical human behavior, allowing the model to add and generate words that are considered relevant but are not in the vocabulary of a given document.
 
-<img src="Images/extractive.jpeg" width=640>
+<img src="Images/extractive.jpg" width=420>
 
 For the given analysis, the following models have been considered:
 
@@ -34,16 +34,21 @@ PEGASUS (Pre-training with Extracted Gap-sentences for Abstractive SUmmarization
 
 At the state of the art, one of the most used alternatives of a human evaluation of text summarization results, clearly not a scalable method, is the Rouge statistic, that is the one used for the current work. ROUGE stands for Recall-Oriented Understudy for Gisting Evaluation. It includes measures to automatically determine the quality of a summary by comparing it to ideal summaries created by humans. The general formula for ROUGE-n is the following one:
 
-<img src="Images/rouge.png" width=640>
+<img src="Images/rouge.png" width=420>
 where N is the length of the n-gram chosen.
 
 For the given analysis we are considering two different types of ROUGE-N, that are ROUGE1 and ROUGE-2, respectively for uni-grams and bi-grams. A different approach is possible using ROUGE-L. ROUGE-L is based on the longest common subsequence (LCS) between our model output and reference. It means that is considering the longest sequence of words (not necessarily consecutive, but still in order) that is shared between both. A longer shared sequence should indicate more similarity between the two sequences. For the given analysis we are considering two different types of ROUGE-N, that are ROUGE-L and ROUGE-L Sum. The main difference between the two is that, while ROUGE-L computes the longest common subsequence (LCS) between the generated text and the reference text ignoring newlines, ROUGE-L-sum does the same considering newlines as sentence boundaries.
 
-<img src="Images/rouge_tab.jpeg" width=640>
+|          | ROUGE-1 | ROUGE-2 | ROUGE-L | ROUGE-L SUM |
+| :---:    | :-----: | :-----: | :-----: | :---------: |
+| Baseline | 0.168   | 0.020   | 0.107   | 0.107       |
+| T5       | 0.171   | 0.023   | 0.117   | 0.117       |
+| BART     | 0.203   | 0.041   | 0.135   | 0.166       |
+| PEGASUS  | 0.472   | 0.269   | 0.412   | 0.414       |
 
-In the following tables, we report the results obtained on a specific document from the test set.
+In the following table, we report the results obtained on a specific document from the test set.
 
-<img src="Images/rouge_sum.jpeg" width=640>
+<img src="Images/rouge_sum.png" width=640>
 
 From both a human evaluation and an analytical one, it is clear the below summary obtained from the Pegasus model is the best one, still keeping a considerable short length of the summary.
 
@@ -51,6 +56,9 @@ From both a human evaluation and an analytical one, it is clear the below summar
 
 In order to improve the results obtained on the best model, we have implemented a fine tuning strategy on the Pegasus model. Fine tuning allows us to adjust the weights estimated on a huge dataset in order to become more similar to a specific task. In this case, the goal of the strategy is to adapt the Pegasus model to sport documents, but still starting from the original weights. To avoid GPU limitations, we randomly selected 10000 documents from the original training dataset and 1000 from the validation one with their respective summaries. The training phase uses 8 elements for each training batch and 4 for each validation one. This step required 8 epochs and around 9 hours of training. After this step the improvement on the validation set was very limited so we decided to not continue more.
 
-<img src="Images/test_tab.jpeg" width=640>
+|                     | ROUGE-1 | ROUGE-2 | ROUGE-L | ROUGE-L SUM |
+| :---:               | :-----: | :-----: | :-----: | :---------: |
+| PEGASUS             | 0.472   | 0.269   | 0.412   | 0.414       |
+| PEGASUS FINE-TUNED  | 0.497   | 0.275   | 0.418   | 0.418       |
 
 The table above shows that the fine tuning model proposed improves the performance compared to the original one. It means that the new version is more capable to summarize sport documents, that is the main goal of the analysis. In particular, the best improvement is observed on the ROUGE-1 metric, so we can interpret the results as an improvement in recognizing relevant unigrams in a starting document.
