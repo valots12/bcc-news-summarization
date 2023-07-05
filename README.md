@@ -37,7 +37,6 @@ At the state of the art, one of the most used alternatives of a human evaluation
 <img src="Images/rouge.png" width=420>
 where N is the length of the n-gram chosen.
 
-For the given analysis we are considering two different types of ROUGE-N, that are ROUGE1 and ROUGE-2, respectively for uni-grams and bi-grams. A different approach is possible using ROUGE-L. ROUGE-L is based on the longest common subsequence (LCS) between our model output and reference. It means that is considering the longest sequence of words (not necessarily consecutive, but still in order) that is shared between both. A longer shared sequence should indicate more similarity between the two sequences. For the given analysis we are considering two different types of ROUGE-N, that are ROUGE-L and ROUGE-L Sum. The main difference between the two is that, while ROUGE-L computes the longest common subsequence (LCS) between the generated text and the reference text ignoring newlines, ROUGE-L-sum does the same considering newlines as sentence boundaries.
 
 |          | ROUGE-1 | ROUGE-2 | ROUGE-L | ROUGE-L SUM |
 | :---:    | :-----: | :-----: | :-----: | :---------: |
